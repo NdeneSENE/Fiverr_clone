@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} | Mes Ventes {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+      <div class="box">
+        <h1 id="responsive" align="center">Mes Ventes</h1>
+        <br>
+        <table class="table is-responsive" align='center'>
+          <thead>
+            <tr>
+              <th>Numéro</th>
+              <th>Titre gig</th>
+              <th>Acheteur</th>
+              <th>Prix</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% if purchases %}
+          {% for purchase in purchases %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td><a href="{% url 'edit_gig' purchase.gig.id %}">{{ purchase.gig.title }}</a></td>
+              <td><a href="{% url 'profil' purchase.buyer.username %}">{{ purchase.buyer.username }}</a></td>
+              <td>{{ purchase.gig.price }}</td>
+              <td>{{ purchase.time }}</td>
+            </tr>
+         {% endfor %}
+         {% else %}
+         <h4 align="center">Vous n'avez pas encore de ventes.</h4>
+         {% endif %}
+          </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

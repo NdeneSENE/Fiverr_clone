@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %} | Creer un gig {% endblock %}
+{% block content %}
+<div class="container">
+ <div class="box">
+     <form action="{% url 'create_gig' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field">
+                <label class="label">Gig title</label>
+                <div class="control">
+                  <textarea class="textarea" name="title"></textarea>
+                </div>
+        </div>
+        <div class="field">
+                <label class="label">Catégorie</label>
+                <div class="control is-medium">
+                  <div class="select">
+                    <select name="category">
+                        <option value="GD">Graphis & Design</option>
+                        <option value="DM">Digital & Marketing</option>
+                        <option value="VA">Video & Animation</option>
+                        <option value="MA">Music & Video</option>
+                        <option value="PT">Programming & Tech</option>
+                    </select>
+                  </div>
+                </div>
+        </div>
+        <div class="field">
+                <label class="label">Description</label>
+                <div class="control">
+                  <textarea class="textarea" name="description"></textarea>
+                </div>
+        </div>
+  <div class="field">
+    <label class="label">Prix</label>
+    <div class="control has-icons-left has-icons-right">
+      <input class="number" type="number" placeholder="2000" name="price" value="">
+      <span class="icon is-small is-left">
+        <i class="fas fa-dollar-sign"></i>
+      </span>
+    </div>
+  </div>
+  
+  <div class="field">
+    <label class="label">Photo</label>
+    <div class="control has-icons-left has-icons-right">
+      <input class="file" name="photo" type="file">
+    </div>
+  </div>
+  
+  <div class="field">
+        <label class="label">Statut</label>
+        <div class="control">
+          <div class="select">
+            <select name="status">
+                <option value="1">Activé</option>
+                <option value="0">Désactivé</option>
+            </select>
+          </div>
+        </div>
+</div>
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link" type="submit">Valider</button>
+    </div>
+    <div class="control">
+      <button class="button is-text">Annuler</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %} {% block title %} | Bienvenue {% endblock %} 
+{% block content %}
+
+<section class="hero is-success is-medium">
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        Fiverr Clone With Django and Bulma
+      </h1>
+      <h2 class="subtitle">
+        By Ndene SENE
+      </h2>
+    </div>
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot">
+    <nav class="tabs is-boxed is-fullwidth">
+      <div class="container">
+        <ul>
+          <li {% if '/category/graphics-design' == request.path %} class="is-active" {% endif %}><a href="/category/graphics-design">Graphics & Design</a></li>
+          <li {% if '/category/digital-marketing' == request.path %} class="is-active" {% endif %}><a href="/category/digital-marketing">Digital Marketing</a></li>
+          <li {% if '/category/video-animation' == request.path %} class="is-active" {% endif %}><a href="/category/video-animation">Video & Animation</a></li>
+          <li {% if '/category/music-audio' == request.path %} class="is-active" {% endif %}><a href="/category/music-audio">Music & Audio</a></li>
+          <li {% if '/category/programming-tech' == request.path %} class="is-active" {% endif %}><a href="/category/programming-tech">Programming & Tech</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<div class="container">
+  <div class="columns">
+    {% if gigs %}
+    {% for gig in gigs %}
+    <div class="column is-one-quarter">
+      <div class="card">
+        <a href="{% url 'gig_detail' gig.id %}">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img
+                src="/media/{{ gig.photo }}"
+                alt="Placeholder image"
+              />
+            </figure>
+          </div>
+        </a>
+        <div class="content">
+          <p><a href="{% url 'gig_detail' gig.id %}">{{ gig.title }} </a></p>
+        </div>
+        <div class="tags has-addons is-center">
+          <span class="tag">Prix:</span>
+          <span class="tag is-danger">{{gig.price }} FCFA</span>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img
+                  class="is-rounded"
+                  src="{{ gig.user.profile.avatar }}"
+                  alt="user"
+                />
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-6"><a href=" {% url 'profil' gig.user.username %} ">{{ gig.user.get_full_name }}</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {%  else %}
+        <div class="container">
+          <p align='center'>Il n'ya pas encore de gig.</p>
+        </div>
+    {% endif %}
+  </div>
+  <nav class="pagination" role="navigation" aria-label="pagination">
+      <a class="pagination-previous" title="This is the first page" disabled>Previous</a>
+      <a class="pagination-next">Next page</a>
+  </nav>
+</div>
+{% endblock %}

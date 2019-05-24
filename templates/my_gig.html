@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} | Vos gigs {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+      <div class="box">
+        <h1 id="responsive" align="center">Mes gigs</h1>
+        <br>
+        <table class="table is-responsive" align='center'>
+          <thead>
+            <tr>
+              <th>Numéro</th>
+              <th>Titre Gig</th>
+              <th>Prix</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for gig in gigs %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td> <a href=" {% url 'edit_gig' gig.id %} ">{{ gig.title }}</a></td>
+              <td>{{ gig.price }}</td>
+              <td>{% if gig.status %} Activé {% else %} Désactivé {% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% load static %}
+<div class="hero-head">
+  <header class="navbar is-primary">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="{% url 'index' %}">
+          <img src="{% static 'img/smile.png' %}" alt="Logo" />
+        </a>
+        <span class="navbar-burger burger" data-target="navbarMenuHeroC">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </div>
+      <div class="level-item">
+        <form action="/search" method="GET" role="search">
+        <div class="field has-addons">
+          <p class="control">
+            <input
+              class="input"
+              type="text"
+              name="title"
+              placeholder="Rechercher un service"
+            />
+          </p>
+          <p class="control">
+            <button class="button">
+              Rechercher
+            </button>
+          </p>
+        </div>
+      </form>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="navbar-end">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <div class="navbar-link">
+              <figure class="image is-24x24">
+                <img  class="is-rounded" src="{% if user.profile %} {{ user.profile.avatar }} {% else %} https://bulma.io/images/placeholders/24x24.png {% endif %} ">
+              </figure>&nbsp;
+              {{ user.username }}
+            </div>
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" href="{% url 'profil' user.username %}">
+                <div>
+                  <span class="icon is-small">
+                    <i class="fa fa-user"></i>
+                  </span>
+                  Profile
+                </div>
+              </a>
+              <a class="navbar-item" href=" {% url 'create_gig' %} ">
+                  <div>
+                    <span class="icon is-small">
+                      <i class="far fa-edit"></i>
+                    </span>
+                    Creer Gig
+                  </div>
+                </a>
+                <a class="navbar-item" href=" {% url 'my_gig' %} ">
+                    <div>
+                      <span class="icon is-small">
+                        <i class="fas fa-list"></i>
+                      </span>
+                      Mes Gigs
+                    </div>
+                </a>
+              <a class="navbar-item" href="{% url 'mes_ventes' %}">
+                  <div>
+                    <span class="icon is-small">
+                        <i class="fas fa-dollar-sign"></i>
+                    </span>
+                    Mes Ventes
+                  </div>
+              </a>
+              <a class="navbar-item" href="{% url 'mes_achats' %}">
+                  <div>
+                    <span class="icon is-small">
+                      <i class="fas fa-hand-holding-usd"></i>
+                    </span>
+                    Mes Achats
+                  </div>
+              </a>
+              <a class="navbar-item" href="javascript:{document.getElementById('logout').submit()}">
+                <div>
+                  <span class="icon is-small">
+                    <i class="fas fa-sign-out-alt"></i>
+                  </span>
+                  Se deconnecter
+                </div>
+                <form action="{% url 'logout' %}" method="POST" id="logout">
+                    {% csrf_token %}
+                    <input type="hidden">
+                </form>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div id="navbarMenuHeroC" class="navbar-menu">
+        <div class="navbar-end">
+          <span class="navbar-item">
+            <a href="{% url 'login' %}" class="button is-success is-inverted">
+              <span class="icon">
+                <i class="fas fa-sign-in-alt"></i>
+              </span>
+              <span>Login</span>
+            </a>
+          </span>
+          <span class="navbar-item">
+            <a
+              href="{% url 'register' %}"
+              class="button is-success is-inverted"
+            >
+              <span class="icon">
+                <i class="fas fa-user-plus"></i>
+              </span>
+              <span>Register</span>
+            </a>
+          </span>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+</div>

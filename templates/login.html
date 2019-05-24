@@ -1,0 +1,66 @@
+{% extends 'base.html' %} {% block title %} | Account Login {% endblock %} 
+{%block content %}
+<section class="hero is-success is-medium">
+  <div class="hero-body">
+    <div class="container">
+      {% include 'partials/_alert.html' %}
+      <div class="columns is-centered">
+        <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+          <form class="box" method="POST" action=" {% url 'login' %} ">
+            {% csrf_token %}
+            <div class="field">
+              <label class="label">Nom d'utilisateur</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="text"
+                  name="username"
+                  placeholder="ndene"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="password"
+                  name="password"
+                  placeholder="********"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <button class="button is-success is-fullwidth" type="submit">
+                Login
+              </button>
+            </div>
+            <div class="field">
+              <a class="is-center" href="">Mot de passe oublié ?</a>
+            </div>
+            <div class="panel-block">
+              <a
+                class="button is-link is-outlined is-fullwidth"
+                onclick="$(this).button('loading');"
+                style="background:blue; color:white"
+                name="facebook"
+                href="{% url 'social:begin' 'facebook' %}"
+              >
+                Login with Facebook
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

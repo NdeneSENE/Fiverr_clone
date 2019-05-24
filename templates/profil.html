@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title %} Profil | {{ user.username }}  {% endblock %}
+{% block content %}
+{% if request.user == profile.user %}
+<div class="container">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="box">
+          <p>
+            <span class='title is-bold is-center'>{{ profile.user.username }} : Votre Slogan</span>
+            <br>
+          </p>
+           <div class="field">
+                   <div class="control">
+                     <input class="textarea" name="slogan" value="{{profile.slogan}}">
+                   </div>
+           </div>
+           <div class='column is-2'>
+              <span class='header-icon user-profile-image'>
+                <img alt='Profil' src='{{ profile.avatar }}'>
+              </span>
+            </div>
+            <div class='column is-6-tablet is-10-mobile name'>
+                <p>
+                  <span class='title is-bold'> A propos de {{ profile.user.username }}</span>
+                  <br>
+                </p>
+                <div class="field">
+                    <div class="control">
+                      <input class="textarea" name="about" value=" {{profile.about}} ">
+                    </div>
+                </div>
+              </div>
+     <div class="field is-grouped">
+       <div class="control">
+         <button class="button is-link" type="submit">Modifier</button>
+       </div>
+     </div>
+   </div>
+   </div>
+  </form>
+
+{% else %}
+<div class='columns'>
+        <div class='container profile'>
+          <div class='section profile-heading'>
+            <div class='columns is-mobile is-multiline'>
+              <div class='column is-2'>
+                <span class='header-icon user-profile-image'>
+                  <img alt='Profil' src='{{ profile.avatar }}'>
+                </span>
+              </div>
+              <div class='column is-4-tablet is-10-mobile name'>
+                <p>
+                  <span class='title is-bold'>{{ profile.user.username }}</span>
+                  <br>
+                </p>
+                <p><strong> {{ profile.slogan }} </strong></p>
+                <p class='tagline'>
+                  {{ profile.about }}
+                </p>
+
+              </div>
+              <div class='column is-2-tablet is-4-mobile has-text-centered'>
+                <p class='stat-val'>30</p>
+                <p class='stat-key'>searches</p>
+              </div>
+              <div class='column is-2-tablet is-4-mobile has-text-centered'>
+                <p class='stat-val'>10</p>
+                <p class='stat-key'>likes</p>
+              </div>
+              <div class='column is-2-tablet is-4-mobile has-text-centered'>
+                <p class='stat-val'>{{ gigs|length }}</p>
+                <p class='stat-key'>GIGS</p>
+              </div>
+            </div>
+          </div>
+          <br/>
+{% endif %}
+          <div class='profile-options is-fullwidth'>
+                <div class='tabs is-fullwidth is-medium'>
+                  <ul>
+                    <li class='link'>
+                      <a>
+                        <span class='icon'>
+                          <i class='fa fa-list'></i>
+                        </span>
+                        <span>{{ profile.user.username }} Gigs</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+          <div class='columns is-mobile'>
+              {% if gigs %}
+              {% for gig in gigs %}
+              <div class="column is-one-quarter">
+                <div class="card">
+                  <a href="{% url 'gig_detail' gig.id %}">
+                    <div class="card-image">
+                      <figure class="image is-4by3">
+                        <img
+                          src="/media/{{ gig.photo }}"
+                          alt="Placeholder image"
+                        />
+                      </figure>
+                    </div>
+                  </a>
+                  <div class="content">
+                    <p><a href="{% url 'gig_detail' gig.id %}">{{ gig.title }} </a></p>
+                  </div>
+                  <div class="tags has-addons is-center">
+                    <span class="tag">Prix:</span>
+                    <span class="tag is-danger">{{gig.price }} FCFA</span>
+                  </div>
+                  <div class="card-content">
+                    <div class="media">
+                      <div class="media-left">
+                        <figure class="image is-48x48">
+                          <img
+                            class="is-rounded"
+                            src="{{ profile.avatar }}"
+                            alt="user"
+                          />
+                        </figure>
+                      </div>
+                      <div class="media-content">
+                        <p class="title is-6"><a href=" {% url 'profil' gig.user.username %} ">{{gig.user.username}}</a></p>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {%  else %}
+                  <div class="container">
+                    <p>Il n'ya pas encore de gig.</p>
+                  </div>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+      
+{% endblock %}
+

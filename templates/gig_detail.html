@@ -1,0 +1,108 @@
+{% extends 'base.html' %} {% block title %} | {{ gig.title }} {% endblock %} 
+{% block content %}
+{% load static %}
+<div class="columns">
+    <div class="column is-8">
+      <div class="content">
+          <h1>
+            {{ gig.title }}
+          </h1>
+      </div>
+      <hr/>
+        <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="/media/{{gig.photo}}" alt="Placeholder image">
+            </figure>
+        </div>
+        <div class="box">
+            <p class="title is-5">Description</p>
+            <p class="subtitle">{{ gig.description }}</p>
+        </div>
+        {% for review in reviews %}
+        <article class="media">
+            <figure class="media-left">
+              <p class="image is-64x64">
+                <img class="is-rounded" src="{% if review.user.profile %} {{ review.user.profile.avatar }} {% else %} https://bulma.io/images/placeholders/24x24.png {% endif %} ">
+              </p>
+            </figure>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>{{ review.user.username }} </strong><small> &nbsp; 10 minutes</small>
+                  <br>
+                  {{ review.content }}
+                </p>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+          
+        {% if show_post_review %}
+        <article class="media">
+            <figure class="media-left">
+              <p class="image is-64x64">
+                <img class="is-rounded" src="{% if user.profile %} {{ user.profile.avatar }} {% else %} https://bulma.io/images/placeholders/24x24.png {% endif %}">
+              </p>
+            </figure>
+            <div class="media-content">
+              <form action="" method="POST">
+                {% csrf_token %}
+              <div class="field">
+                <p class="control">
+                  <textarea class="textarea"  name="content" placeholder="Ajoutez un commentaire..."></textarea>
+                </p>
+              </div>
+              <nav class="level">
+                <div class="level-left">
+                  <div class="level-item">
+                    <button class="button is-info" type="submit" >Commenter</button>
+                  </div>
+                </div>
+              </nav>
+            </form>
+            </div>
+          </article>
+          {% endif %}
+    </div>
+    <div class="column">
+      {% if user and not user.is_anonymous %}
+      <div class="box">
+            <form method="POST" action="/">
+              {% csrf_token %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_A0jhPuZSLO1R8yJfOgF4nVlD"
+              data-description="{{gig.title}}"
+              data-amount="{{ gig.price }}"
+              data-currency="xof"
+              data-name="Fiverr Clone By Ndene"
+              data-image="https://scontent.fdkr1-1.fna.fbcdn.net/v/t1.0-1/p320x320/56472482_10219431804090990_2262788208339189760_n.jpg?_nc_cat=109&_nc_ht=scontent.fdkr1-1.fna&oh=f044f57ed6fb4904627220f92aa8fb90&oe=5D93D64C"
+              data-locale="auto">
+            </script>
+            <script>
+              // Hide default stripe button, be careful there if you
+              // have more than 1 button of that class
+              document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+          </script>
+          <button class="button is-success is-medium is-fullwidth">Acheter ({{ gig.price }}&nbsp;FCFA) </button>
+          <img src=" {% static 'img/pay.png' %} " alt="Payement methode" align="center">
+            </form>
+      </div>
+      {% else %}
+      <div class="box">
+        <p align="center">Vous devez vous connecter pour acheter ce gig.</p>
+         <a class="button is-success is-medium is-fullwidth" href=" {% url 'login' %} ">Acheter ({{ gig.price }}&nbsp;FCFA) </a>
+      </div>
+      {% endif %}
+      <div class="box">
+          <figure class="image is-square">
+              <img class="is-rounded is-center" src="{{ gig.user.profile.avatar }}">
+          </figure>
+          <hr/>
+          <a href=" {% url 'profil' gig.user.username %} "><h4 align="center">{{ gig.user.username }}</h4></a>
+          <hr/>
+          <p>{{ gig.user.profile.about }}</p>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}
