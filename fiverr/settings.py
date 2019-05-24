@@ -155,7 +155,7 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '688976234869612'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'a07333b19af35138640805d0a43b8083'
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
@@ -170,7 +170,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.associate_by_email',
 )
 
-STRIPE_SECRET_KEY = 'sk_test_wRbZy26RlWcs4IIfzLCJ7m9e'
+STRIPE_SECRET_KEY = ''
 STRIPE_PUBLISHABLE_KEY = 'pk_test_A0jhPuZSLO1R8yJfOgF4nVlD'
 
 
